@@ -1506,14 +1506,12 @@ public class Facebook extends org.semanticwb.social.base.FacebookBase {
                 }
                 //String aux = null;
                 if (answer.contains("access_token")) {
-                    String params[] = answer.split("&");
-                    for (String oneParam : params) {
-                        if (oneParam.indexOf("=") > 0 && oneParam.contains("access_token")) {
-                            accessToken = oneParam.split("=")[1];
-                            break;
-                        }
+                    JSONObject jsonAnswer = new JSONObject(answer);
+                    if (jsonAnswer.has("access_token") && !jsonAnswer.isNull("access_token")) {
+                        accessToken = jsonAnswer.getString("access_token");
                     }
                 }
+                
                 //System.out.println("access token original final:" + accessToken);
                 /*if (answer.indexOf("&") > 0) {
                  aux = answer.split("&")[0];
@@ -1593,7 +1591,7 @@ public class Facebook extends org.semanticwb.social.base.FacebookBase {
             }
         } else {
             session.removeAttribute("state");
-            //System.out.println("ERROR:Se ha encontrado un problema con la respuesta obtenida, se considera no aut&eacute;ntica.");
+            System.out.println("ERROR:Se ha encontrado un problema con la respuesta obtenida, se considera no aut&eacute;ntica.");
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
             out.println("try{" +

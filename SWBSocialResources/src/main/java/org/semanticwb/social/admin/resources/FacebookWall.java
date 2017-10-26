@@ -501,7 +501,8 @@ public class FacebookWall extends GenericResource {
                                 message = SWBSocialResUtil.Util.createHttpLink(postData.getString("message"));
                             } else if (!postData.isNull("story")) {
                                 story = (!postData.isNull("story")) ? postData.getString("story") : "";
-                                story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
+                                //Depreciado en API de Facebook posterior a 2.3
+//                                story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
                             }
                             if (!message.isEmpty()) {
                                 postIn.setMsg_Text(message);
@@ -514,7 +515,8 @@ public class FacebookWall extends GenericResource {
                         } else if (postType.equals("link")) {
                             if (!postData.isNull("story")) {
                                 story = (!postData.isNull("story")) ? postData.getString("story") : "";
-                                story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
+                                //Depreciado en API de Facebook posterior a 2.3
+//                                story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
                             }
                             if (!postData.isNull("message")) {
                                 message = SWBSocialResUtil.Util.createHttpLink(postData.getString("message"));
@@ -566,7 +568,8 @@ public class FacebookWall extends GenericResource {
                             message = SWBSocialResUtil.Util.createHttpLink(postData.getString("message"));
                         } else if (!postData.isNull("story")) {
                             story = (!postData.isNull("story")) ? postData.getString("story") : "";
-                            story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
+                            //Depreciado en API de Facebook posterior a 2.3
+//                            story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
                         }
 
                         if (!message.isEmpty()) {
@@ -625,7 +628,8 @@ public class FacebookWall extends GenericResource {
                             message = SWBSocialResUtil.Util.createHttpLink(postData.getString("message"));
                         } else if (!postData.isNull("story")) {
                             story = (!postData.isNull("story")) ? postData.getString("story") : "";
-                            story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
+                            //Depreciado en API de Facebook posterior a 2.3
+//                            story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
                         }
 
                         if (!message.isEmpty()) {
@@ -1025,7 +1029,8 @@ public class FacebookWall extends GenericResource {
                                 message = SWBSocialResUtil.Util.createHttpLink(postData.getString("message"));
                             } else if (!postData.isNull("story")) {
                                 story = (!postData.isNull("story")) ? postData.getString("story") : "";
-                                story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
+                                //Depreciado en API de Facebook posterior a 2.3
+//                                story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
                             }
                             if (!message.isEmpty()) {
                                 postIn.setMsg_Text(message);
@@ -1038,7 +1043,8 @@ public class FacebookWall extends GenericResource {
                         } else if (postType.equals("link")) {
                             if (!postData.isNull("story")) {
                                 story = (!postData.isNull("story")) ? postData.getString("story") : "";
-                                story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
+                                //Depreciado en API de Facebook posterior a 2.3
+//                                story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
                             }
                             if (!postData.isNull("message")) {
                                 message = SWBSocialResUtil.Util.createHttpLink(postData.getString("message"));
@@ -1061,7 +1067,8 @@ public class FacebookWall extends GenericResource {
                             message = SWBSocialResUtil.Util.createHttpLink(postData.getString("message"));
                         } else if (!postData.isNull("story")) {
                             story = (!postData.isNull("story")) ? postData.getString("story") : "";
-                            story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
+                            //Depreciado en API de Facebook posterior a 2.3
+//                            story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
                         }
 
                         if (postData.has("source")) {
@@ -1091,7 +1098,8 @@ public class FacebookWall extends GenericResource {
                             message = SWBSocialResUtil.Util.createHttpLink(postData.getString("message"));
                         } else if (!postData.isNull("story")) {
                             story = (!postData.isNull("story")) ? postData.getString("story") : "";
-                            story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
+                            //Depreciado en API de Facebook posterior a 2.3
+//                            story = getTagsFromPost(postData.getJSONObject("story_tags"), story);
                         } else if (!postData.isNull("name")) {
                             message = SWBSocialResUtil.Util.createHttpLink(postData.getString("name"));
                         }
@@ -1418,7 +1426,8 @@ public class FacebookWall extends GenericResource {
         HashMap<String, String> params = new HashMap<String, String>(3);
         params.put("access_token", facebook.getAccessToken());
         params.put("limit", "5");
-        params.put("fields", "id,from,to,message,message_tags,story,story_tags,picture,caption,link,object_id,application,source,name,description,properties,privacy,type,status_type,created_time,actions,likes.summary(true),comments.limit(5).summary(true),place");
+        //Depreciado en API de Facebook posterior a 2.3: story_tags,
+        params.put("fields", "id,from,to,message,message_tags,story,picture,caption,link,object_id,application,source,name,description,properties,privacy,type,status_type,created_time,actions,likes.summary(true),comments.limit(5).summary(true),place");
         if (before != null && !before.isEmpty()) {
             params.put("since", before);
         }
@@ -2139,14 +2148,15 @@ public class FacebookWall extends GenericResource {
             }
 
             if (postType.equals("photo")) {
-                if (!postsData.isNull("story")) {
-                    story = (!postsData.isNull("story"))
-                            ? postsData.getString("story").replace(postsData.getJSONObject("from").getString("name"), "")
-                            : "";
-                    if (!postsData.isNull("story_tags")) {//Users tagged in story
-                        story = getTagsFromPost(postsData.getJSONObject("story_tags"), story, renderURL);
-                    }
-                }
+                //Depreciado en API de Facebook posterior a 2.3
+//                if (!postsData.isNull("story")) {
+//                    story = (!postsData.isNull("story"))
+//                            ? postsData.getString("story").replace(postsData.getJSONObject("from").getString("name"), "")
+//                            : "";
+//                    if (!postsData.isNull("story_tags")) {//Users tagged in story
+//                        story = getTagsFromPost(postsData.getJSONObject("story_tags"), story, renderURL);
+//                    }
+//                }
 
                 if (!postsData.isNull("message")) {
                     message = SWBSocialResUtil.Util.createHttpLink(postsData.getString("message"));
@@ -2174,9 +2184,10 @@ public class FacebookWall extends GenericResource {
                     story = (!postsData.isNull("story"))
                             ? postsData.getString("story").replace(postsData.getJSONObject("from").getString("name"), "")
                             : "";
-                    if (!postsData.isNull("story_tags")) {//Users tagged in story
-                        story = getTagsFromPost(postsData.getJSONObject("story_tags"), story, renderURL);
-                    }
+                    //Depreciado en API de Facebook posterior a 2.3
+//                    if (!postsData.isNull("story_tags")) {//Users tagged in story
+//                        story = getTagsFromPost(postsData.getJSONObject("story_tags"), story, renderURL);
+//                    }
                     if (story.contains("is going to an event") && postsData.has("link")) {//If the link is an event
                         return;
                         //message = "<a href=\"" + postsData.getString("link") + "\" target=\"_blank\">View event</a>";
@@ -2245,10 +2256,11 @@ public class FacebookWall extends GenericResource {
                     story = (!postsData.isNull("story"))
                             ? postsData.getString("story").replace(postsData.getJSONObject("from").getString("name"), "")
                             : "";
-                    if (!postsData.isNull("story_tags")) {//Users tagged in story
-                        JSONObject storyTags = postsData.getJSONObject("story_tags");
-                        story = getTagsFromPost(storyTags, story, renderURL);
-                    }
+                    //Depreciado en API de Facebook posterior a 2.3
+//                    if (!postsData.isNull("story_tags")) {//Users tagged in story
+//                        JSONObject storyTags = postsData.getJSONObject("story_tags");
+//                        story = getTagsFromPost(storyTags, story, renderURL);
+//                    }
                     if (story.contains("likes a photo")) {
                         /*photoLike = getPostFromId(postsData.getString("id"), "id,from,name,name_tags,picture,source,link,tags", facebook);
                          isAPhotoLike = true;*/
@@ -2286,10 +2298,11 @@ public class FacebookWall extends GenericResource {
                     story = (!postsData.isNull("story"))
                             ? postsData.getString("story").replace(postsData.getJSONObject("from").getString("name"), "")
                             : "";
-                    if (!postsData.isNull("story_tags")) {//Users tagged in story
-                        JSONObject storyTags = postsData.getJSONObject("story_tags");
-                        story = getTagsFromPost(storyTags, story, renderURL);
-                    }
+                    //Depreciado en API de Facebook posterior a 2.3
+//                    if (!postsData.isNull("story_tags")) {//Users tagged in story
+//                        JSONObject storyTags = postsData.getJSONObject("story_tags");
+//                        story = getTagsFromPost(storyTags, story, renderURL);
+//                    }
                 }
             } else if (postType.equals("checkin")) {
                 if (!postsData.isNull("message")) {
