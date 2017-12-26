@@ -21,40 +21,29 @@
         <dependency>
             <groupId>org.semanticwb</groupId>
             <artifactId>SWBBase</artifactId>
-            <version>5.0-SNAPSHOT</version>
+            <version>5.0</version>
         </dependency>
         <dependency>
             <groupId>org.semanticwb</groupId>
             <artifactId>SWBModel</artifactId>
-            <version>5.0-SNAPSHOT</version>
+            <version>5.0</version>
         </dependency>
         <dependency>
             <groupId>org.semanticwb</groupId>
             <artifactId>SWBPlatform</artifactId>
-            <version>5.0-SNAPSHOT</version>
+            <version>5.0</version>
         </dependency>
         <dependency>
             <groupId>org.semanticwb</groupId>
             <artifactId>SWBPortal</artifactId>
-            <version>5.0-SNAPSHOT</version>
+            <version>5.0</version>
         </dependency>
-        <!--dependency>
-            <groupId>jetty</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5-6.0.2</version>
-        </dependency-->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        
-        <!--dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20170516</version>
-        </dependency-->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -151,11 +140,5 @@
             <artifactId>javaQuery</artifactId>
             <version>5.0</version>
         </dependency>
-        <!--dependency>
-            <groupId></groupId>
-            <artifactId></artifactId>
-            <version></version>
-        </dependency-->
     </dependencies>
-
 </project>

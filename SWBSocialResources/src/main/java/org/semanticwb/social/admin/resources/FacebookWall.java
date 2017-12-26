@@ -2148,7 +2148,7 @@ public class FacebookWall extends GenericResource {
             }
 
             if (postType.equals("photo")) {
-                //Depreciado en API de Facebook posterior a 2.3
+                //Depreciado en API de Facebook posterior a 2.3, ahora es un arreglo
 //                if (!postsData.isNull("story")) {
 //                    story = (!postsData.isNull("story"))
 //                            ? postsData.getString("story").replace(postsData.getJSONObject("from").getString("name"), "")
@@ -2280,7 +2280,7 @@ public class FacebookWall extends GenericResource {
                         return;
                     } else if (story.contains("commented on")) {
                         return;
-                    } else if (story.contains("likes")) {//USER likes PAGE
+                    } else if (story.contains("likes") || story.contains("fan_count")) {//USER likes PAGE
                         return;
                     } else if (story.contains("is going to")) {//events
                         return;
