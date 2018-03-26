@@ -28,6 +28,7 @@
  */
 package org.semanticwb.social.admin.resources;
 
+import com.hp.hpl.jena.ontology.OntModel;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -467,7 +468,7 @@ public class StreamInBoxNoTopic extends GenericResource {
         urlOderby.setParameter("act", "");
         urlOderby.setParameter("suri", id);
 
-        String typeOrder = "Ordenar Ascendente";
+        String typeOrder = "Orden Ascendente";
         String nameClass = "ascen";
         urlOderby.setParameter("orderBy", "PostTypeDown");
         if (request.getParameter("orderBy") != null) {
@@ -479,7 +480,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClass = "descen";
                         urlOderby.setParameter("orderBy", "PostTypeUp");
-                        typeOrder = "Ordenar Descendente";
+                        typeOrder = "Orden Descendente";
                     }
                 }
             }
@@ -492,7 +493,7 @@ public class StreamInBoxNoTopic extends GenericResource {
         out.println("</th>");
 
         String nameClassNetwork = "ascen";
-        String typeOrderNetwork = "Ordenar Ascendente";
+        String typeOrderNetwork = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "networkDown");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("networkUp") || request.getParameter("orderBy").equals("networkDown")) {
@@ -502,7 +503,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassNetwork = "descen";
                         urlOderby.setParameter("orderBy", "networkUp");
-                        typeOrderNetwork = "Ordenar Descendente";
+                        typeOrderNetwork = "Orden Descendente";
                     }
                 }
             }
@@ -516,7 +517,7 @@ public class StreamInBoxNoTopic extends GenericResource {
 
 
         String nameClassCreted = "ascen";
-        String typeOrderCreted = "Ordenar Ascendente";
+        String typeOrderCreted = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "cretedDown");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("cretedUp") || request.getParameter("orderBy").equals("cretedDown")) {
@@ -527,7 +528,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassCreted = "descen";
                         urlOderby.setParameter("orderBy", "cretedUp");
-                        typeOrderCreted = "Ordenar Descendente";
+                        typeOrderCreted = "Orden Descendente";
                     }
                 }
             }
@@ -541,7 +542,7 @@ public class StreamInBoxNoTopic extends GenericResource {
 
 
         String nameClassSentiment = "ascen";
-        String typeOrderSentiment = "Ordenar Ascendente";
+        String typeOrderSentiment = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "sentimentDown");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("sentimentUp") || request.getParameter("orderBy").equals("sentimentDown")) {
@@ -551,7 +552,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassSentiment = "descen";
                         urlOderby.setParameter("orderBy", "sentimentUp");
-                        typeOrderSentiment = "Ordenar Descendente";
+                        typeOrderSentiment = "Orden Descendente";
                     }
                 }
             }
@@ -563,33 +564,59 @@ public class StreamInBoxNoTopic extends GenericResource {
         out.println("</a>");
         out.println("</th>");
 
-        String nameClassIntensity = "ascen";
-        String typeOrderIntensity = "Ordenar Ascendente";
-        urlOderby.setParameter("orderBy", "intensityDown");
+        //Comentado para agregar la clasificacion obtenida externamente 08/03/18
+//        String nameClassIntensity = "ascen";
+//        String typeOrderIntensity = "Orden Ascendente";
+//        urlOderby.setParameter("orderBy", "intensityDown");
+//        if (request.getParameter("orderBy") != null) {
+//            if (request.getParameter("orderBy").equals("intensityUp") || request.getParameter("orderBy").equals("intensityDown")) {
+//                if (request.getParameter("nameClassIntensity") != null) {
+//                    if (request.getParameter("nameClassIntensity").equals("descen")) {
+//                        nameClassIntensity = "ascen";
+//                    } else {
+//                        nameClassIntensity = "descen";
+//                        urlOderby.setParameter("orderBy", "intensityUp");
+//                        typeOrderIntensity = "Orden Descendente";
+//                    }
+//                }
+//            }
+//        }
+//        out.println("<th>");
+//        urlOderby.setParameter("nameClassIntensity", nameClassIntensity);
+//        out.println("<a href=\"#\" class=\"" + nameClassIntensity + "\" title=\"" + typeOrderIntensity + "\" onclick=\"submitUrl('" + urlOderby + "',this); return false;\">");
+//        out.println("<span>" + paramRequest.getLocaleString("intensity") + "</span>");
+//        out.println("<small>Descendente</small>");
+//        out.println("</a>");
+//        out.println("</th>");
+
+        //Segunda clasificacion
+        String nameClass2ndClassif = "ascen";
+        String typeOrderIntensity = "Orden Ascendente";
+        urlOderby.setParameter("orderBy", "2ndClassifDown");
         if (request.getParameter("orderBy") != null) {
-            if (request.getParameter("orderBy").equals("intensityUp") || request.getParameter("orderBy").equals("intensityDown")) {
-                if (request.getParameter("nameClassIntensity") != null) {
-                    if (request.getParameter("nameClassIntensity").equals("descen")) {
-                        nameClassIntensity = "ascen";
+            if (request.getParameter("orderBy").equals("2ndClassifUp") || request.getParameter("orderBy").equals("2ndClassifDown")) {
+                if (request.getParameter("nameClass2ndClassif") != null) {
+                    if (request.getParameter("nameClass2ndClassif").equals("descen")) {
+                        nameClass2ndClassif = "ascen";
                     } else {
-                        nameClassIntensity = "descen";
-                        urlOderby.setParameter("orderBy", "intensityUp");
-                        typeOrderIntensity = "Ordenar Descendente";
+                        nameClass2ndClassif = "descen";
+                        urlOderby.setParameter("orderBy", "2ndClassifUp");
+                        typeOrderIntensity = "Orden Descendente";
                     }
                 }
             }
         }
         out.println("<th>");
-        urlOderby.setParameter("nameClassIntensity", nameClassIntensity);
-        out.println("<a href=\"#\" class=\"" + nameClassIntensity + "\" title=\"" + typeOrderIntensity + "\" onclick=\"submitUrl('" + urlOderby + "',this); return false;\">");
-        out.println("<span>" + paramRequest.getLocaleString("intensity") + "</span>");
+        urlOderby.setParameter("nameClass2ndClassif", nameClass2ndClassif);
+        out.println("<a href=\"#\" class=\"" + nameClass2ndClassif + "\" title=\"" + typeOrderIntensity + "\" onclick=\"submitUrl('" + urlOderby + "',this); return false;\">");
+        out.println("<span>" + paramRequest.getLocaleString("2ndClassif") + "</span>");
         out.println("<small>Descendente</small>");
         out.println("</a>");
         out.println("</th>");
 
         /*
         String nameClassEmoticon = "ascen";
-        String typeOrderEmoticon = "Ordenar Ascendente";
+        String typeOrderEmoticon = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "emoticonDown");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("emoticonUp") || request.getParameter("orderBy").equals("emoticonDown")) {
@@ -599,7 +626,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassEmoticon = "descen";
                         urlOderby.setParameter("orderBy", "emoticonUp");
-                        typeOrderEmoticon = "Ordenar Descendente";
+                        typeOrderEmoticon = "Orden Descendente";
                     }
                 }
             }
@@ -614,7 +641,7 @@ public class StreamInBoxNoTopic extends GenericResource {
 
 
         String nameClassReplies = "ascen";
-        String typeOrderReplies = "Ordenar Ascendente";
+        String typeOrderReplies = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "repliesDown");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("repliesUp") || request.getParameter("orderBy").equals("repliesDown")) {
@@ -624,7 +651,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassReplies = "descen";
                         urlOderby.setParameter("orderBy", "repliesUp");
-                        typeOrderReplies = "Ordenar Descendente";
+                        typeOrderReplies = "Orden Descendente";
                     }
                 }
             }
@@ -638,7 +665,7 @@ public class StreamInBoxNoTopic extends GenericResource {
         out.println("</th>");
 
         String nameClassUser = "ascen";
-        String typeOrderUser = "Ordenar Ascendente";
+        String typeOrderUser = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "userUp");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("userUp") || request.getParameter("orderBy").equals("userDown")) {
@@ -648,7 +675,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassUser = "descen";
                         urlOderby.setParameter("orderBy", "userDown");
-                        typeOrderUser = "Ordenar Descendente";
+                        typeOrderUser = "Orden Descendente";
 
                     }
                 }
@@ -663,7 +690,7 @@ public class StreamInBoxNoTopic extends GenericResource {
         out.println("</th>");
 
         String nameClassFollowers = "ascen";
-        String typeOrderFollowers = "Ordenar Ascendente";
+        String typeOrderFollowers = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "followersDown");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("followersUp") || request.getParameter("orderBy").equals("followersDown")) {
@@ -673,7 +700,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassFollowers = "descen";
                         urlOderby.setParameter("orderBy", "followersUp");
-                        typeOrderFollowers = "Ordenar Descendente";
+                        typeOrderFollowers = "Orden Descendente";
                     }
                 }
             }
@@ -687,7 +714,7 @@ public class StreamInBoxNoTopic extends GenericResource {
         out.println("</th>");
 
         String nameClassFriends = "ascen";
-        String typeOrderFriends = "Ordenar Ascendente";
+        String typeOrderFriends = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "friendsDown");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("friendsUp") || request.getParameter("orderBy").equals("friendsDown")) {
@@ -697,7 +724,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassFriends = "descen";
                         urlOderby.setParameter("orderBy", "friendsUp");
-                        typeOrderFriends = "Ordenar Descendente";
+                        typeOrderFriends = "Orden Descendente";
                     }
                 }
             }
@@ -711,7 +738,7 @@ public class StreamInBoxNoTopic extends GenericResource {
         out.println("</th>");
 
         String nameClassKlout = "ascen";
-        String typeOrderKlout = "Ordenar Ascendente";
+        String typeOrderKlout = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "kloutDown");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("kloutUp") || request.getParameter("orderBy").equals("kloutDown")) {
@@ -721,7 +748,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassKlout = "descen";
                         urlOderby.setParameter("orderBy", "kloutUp");
-                        typeOrderKlout = "Ordenar Descendente";
+                        typeOrderKlout = "Orden Descendente";
                     }
                 }
             }
@@ -735,7 +762,7 @@ public class StreamInBoxNoTopic extends GenericResource {
         out.println("</th>");
 
         String nameClassPlace = "ascen";
-        String typeOrderPlace = "Ordenar Ascendente";
+        String typeOrderPlace = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "placeDown");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("placeUp") || request.getParameter("orderBy").equals("placeDown")) {
@@ -745,7 +772,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassPlace = "descen";
                         urlOderby.setParameter("orderBy", "placeUp");
-                        typeOrderPlace = "Ordenar Descendente";
+                        typeOrderPlace = "Orden Descendente";
                     }
                 }
             }
@@ -759,7 +786,7 @@ public class StreamInBoxNoTopic extends GenericResource {
         out.println("</th>");
 
         String nameClassPrioritary = "ascen";
-        String typeOrderPrioritary = "Ordenar Ascendente";
+        String typeOrderPrioritary = "Orden Ascendente";
         urlOderby.setParameter("orderBy", "prioritaryDown");
         if (request.getParameter("orderBy") != null) {
             if (request.getParameter("orderBy").equals("prioritaryUp") || request.getParameter("orderBy").equals("prioritaryDown")) {
@@ -769,7 +796,7 @@ public class StreamInBoxNoTopic extends GenericResource {
                     } else {
                         nameClassPrioritary = "descen";
                         urlOderby.setParameter("orderBy", "prioritaryUp");
-                        typeOrderPrioritary = "Ordenar Descendente";
+                        typeOrderPrioritary = "Orden Descendente";
                     }
                 }
             }
@@ -1271,10 +1298,10 @@ public class StreamInBoxNoTopic extends GenericResource {
                             sQuery=getPostInSentimentalType_Query(null, Integer.valueOf((nPage * RECPERPAGE) - RECPERPAGE).longValue(), Integer.valueOf((RECPERPAGE)).longValue(), false, stream);
                         } else if (request.getParameter("orderBy").equals("sentimentDown")) {
                             sQuery=getPostInSentimentalType_Query("down", Integer.valueOf((nPage * RECPERPAGE) - RECPERPAGE).longValue(), Integer.valueOf((RECPERPAGE)).longValue(), false, stream);
-                        } else if (request.getParameter("orderBy").equals("intensityUp")) {
-                            sQuery=getPostInIntensityType_Query(null, Integer.valueOf((nPage * RECPERPAGE) - RECPERPAGE).longValue(), Integer.valueOf((RECPERPAGE)).longValue(), false, stream);
-                        } else if (request.getParameter("orderBy").equals("intensityDown")) {
-                            sQuery=getPostInIntensityType_Query("down", Integer.valueOf((nPage * RECPERPAGE) - RECPERPAGE).longValue(), Integer.valueOf((RECPERPAGE)).longValue(), false, stream);
+                        } else if (request.getParameter("orderBy").equals("2ndClassifUp")) {
+                            sQuery=getPostIn2ndClassif_Query(null, Integer.valueOf((nPage * RECPERPAGE) - RECPERPAGE).longValue(), Integer.valueOf((RECPERPAGE)).longValue(), false, stream);
+                        } else if (request.getParameter("orderBy").equals("2ndClassifDown")) {
+                            sQuery=getPostIn2ndClassif_Query("down", Integer.valueOf((nPage * RECPERPAGE) - RECPERPAGE).longValue(), Integer.valueOf((RECPERPAGE)).longValue(), false, stream);
                         } else if (request.getParameter("orderBy").equals("emoticonUp")) {
                             streamPostIns=Integer.parseInt(getPostInEmotType_Query(null, Integer.valueOf((nPage * RECPERPAGE) - RECPERPAGE).longValue(), Integer.valueOf((RECPERPAGE)).longValue(), true, stream));
                             sQuery=getPostInEmotType_Query(null, Integer.valueOf((nPage * RECPERPAGE) - RECPERPAGE).longValue(), Integer.valueOf((RECPERPAGE)).longValue(), false, stream);
@@ -2056,6 +2083,53 @@ public class StreamInBoxNoTopic extends GenericResource {
         return query;   
     }
     
+    private String getPostIn2ndClassif_Query(String orderType, long offset, long limit, boolean isCount, Stream stream)
+    {
+        String query=
+           "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+           "PREFIX social: <http://www.semanticwebbuilder.org/swb4/social#>" +
+           "\n";
+           if (isCount) { 
+               query+="select DISTINCT (COUNT(?postUri) AS ?c1) \n";    //Para Gena
+               //query+="select count(*)\n";
+           }else query+="select *\n";
+           
+           query+=
+           "where {\n" +
+           "  ?postUri social:postInStream <"+ stream.getURI()+">. \n" + 
+           "  ?postUri social:extClassif ?extClassif." + "\n" + 
+           "  ?postUri social:pi_createdInSocialNet ?postInCreated. \n" +
+           "  OPTIONAL {" +
+           "    ?postUri social:socialTopic ?postInTopic. \n" +
+           "    } \n" +
+           "  FILTER(!bound(?postInTopic)) \n" +
+           "  }\n";
+
+           if(!isCount)
+           {
+                if(orderType==null || orderType.equalsIgnoreCase("up"))
+                {
+                    query+="ORDER BY asc(?extClassif) ";
+                }else
+                {
+                    query+="ORDER BY desc(?extClassif) ";
+                }
+                query+="desc(?postInCreated) \n";
+                
+                query+="OFFSET "+offset +"\n";
+                if(limit>0)
+                {
+                  query+="LIMIT "+limit;   
+                }
+           }
+           if(isCount)
+           {
+               WebSite wsite=WebSite.ClassMgr.getWebSite(stream.getSemanticObject().getModel().getName());
+               query=SWBSocial.executeQuery(query, wsite);
+           }
+        return query;   
+    }
+    
     private String getPostInEmotType_Query(String orderType, long offset, long limit, boolean isCount, Stream stream)
     {
         String query=
@@ -2662,11 +2736,41 @@ public class StreamInBoxNoTopic extends GenericResource {
        }
        out.println("</td>");
 
-       //Intensity
-       out.println("<td>");
-       out.println(postIn.getPostIntesityType() == 0 ? "<img src=\" " + SWBPlatform.getContextPath() + " /swbadmin/css/images/ibaja.png\" border=\"0\" title=\"  " + paramRequest.getLocaleString("low") + "  \">" : postIn.getPostIntesityType() == 1 ? "<img src=\" " + SWBPlatform.getContextPath() + " /swbadmin/css/images/imedia.png\" border=\"0\" title=\"  " + paramRequest.getLocaleString("medium") + "  \">" : postIn.getPostIntesityType() == 2 ? "<img src=\" " + SWBPlatform.getContextPath() + " /swbadmin/css/images/ialta.png\" border=\"0\" title=\" " + paramRequest.getLocaleString("high") + "  \">" : "---");
-       out.println("</td>");
+       //Intensity  - comentado para agregar la segunda clasificacion 08/03/2018
+//       out.println("<td>");
+//       out.println(postIn.getPostIntesityType() == 0 ? "<img src=\" " + SWBPlatform.getContextPath() + " /swbadmin/css/images/ibaja.png\" border=\"0\" title=\"  " + paramRequest.getLocaleString("low") + "  \">" : postIn.getPostIntesityType() == 1 ? "<img src=\" " + SWBPlatform.getContextPath() + " /swbadmin/css/images/imedia.png\" border=\"0\" title=\"  " + paramRequest.getLocaleString("medium") + "  \">" : postIn.getPostIntesityType() == 2 ? "<img src=\" " + SWBPlatform.getContextPath() + " /swbadmin/css/images/ialta.png\" border=\"0\" title=\" " + paramRequest.getLocaleString("high") + "  \">" : "---");
+//       out.println("</td>");
 
+       //Segunda clasificacion
+        String classifURI = "http://www.semanticwebbuilder.org/swb4/social#extClassif";
+        String affinityURI = "http://www.semanticwebbuilder.org/swb4/social#extClassifAffinity";
+        OntModel ont = SWBPlatform.getSemanticMgr().getSchema().getRDFOntModel();
+        boolean clearPassed = true;
+        int classif = 0;
+        float affinity = 0F;
+        try {
+            classif = postIn.getSemanticObject().getRDFResource()
+                            .getProperty(ont.createDatatypeProperty(classifURI)).getInt();
+            affinity = postIn.getSemanticObject().getRDFResource()
+                            .getProperty(ont.createDatatypeProperty(affinityURI)).getFloat();
+        } catch (Exception e) {
+            clearPassed = false;
+            this.log.fatal("Retrieving 2nd classification data", e);
+        }
+        out.println("<td>");
+        if (clearPassed) {
+            if (classif == 0) {
+                out.println("---");
+            } else if (classif == 1) {
+                out.println("<img title=\"Positivo (" + affinity + ")\" src=\"" + SWBPortal.getContextPath() + "/swbadmin/css/images/pos.png" + "\">");
+            } else if (classif == -1) {
+                out.println("<img title=\"Negativo (" + affinity + ")\" src=\"" + SWBPortal.getContextPath() + "/swbadmin/css/images/neg.png" + "\">");
+            }
+        } else {
+            out.println("&nbsp;");
+        }
+        out.println("</td>");
+       
        //Emoticon
        /*out.println("<td align=\"center\">");
        if (postIn.getPostSentimentalEmoticonType() == 1) {

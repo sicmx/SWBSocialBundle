@@ -29,6 +29,7 @@
 
 package org.semanticwb.social.listener;
 
+import com.hp.hpl.jena.ontology.OntModel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,10 +41,12 @@ import java.util.StringTokenizer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.semanticwb.Logger;
+import org.semanticwb.SWBPlatform;
 import org.semanticwb.SWBUtils;
 import org.semanticwb.model.Language;
 import org.semanticwb.model.SWBModel;
 import org.semanticwb.model.WebSite;
+import org.semanticwb.platform.SemanticObject;
 import org.semanticwb.social.Action;
 import org.semanticwb.social.Country;
 import org.semanticwb.social.CountryState;
@@ -546,6 +549,27 @@ public class SentimentalDataClassifier {
                     {
                         //Se elimina nuevo postIn, ya que por alguna razón no se le asoció un SocialNetworkUser
                         post.remove();
+                    } else {  // Acciones extra, ejemplo: Otro clasificador (Elio)
+                        String classifURI = "http://www.semanticwebbuilder.org/swb4/social#extClassif";
+                        String affinityURI = "http://www.semanticwebbuilder.org/swb4/social#extClassifAffinity";
+                        OntModel ont = SWBPlatform.getSemanticMgr().getSchema().getRDFOntModel();
+                        JSONObject classification = SWBSocialUtil.Classifier.getExternalClassification(externalString2Clasify);
+                        //System.out.println("Clasificado: \n" + classification.toString(4));
+                        if (null != classification) {
+                            String classif = classification.getString("klass");
+                            int _2ndClassif = 0;
+                            float affinity = (float) classification.getDouble("voc_affinity");
+                            switch (classif) {
+                                case "positive": _2ndClassif = 1;
+                                                break;
+                                case "neutral": _2ndClassif = 0;
+                                                break;
+                                case "negative": _2ndClassif = -1;
+                            }
+                            SemanticObject semanticPost = post.getSemanticObject();
+                            semanticPost.getRDFResource().addLiteral(ont.createDatatypeProperty(classifURI), _2ndClassif);
+                            semanticPost.getRDFResource().addLiteral(ont.createDatatypeProperty(affinityURI), affinity);
+                        }
                     }
                 }
             }
