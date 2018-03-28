@@ -308,6 +308,7 @@ pesaroso;2.86;4.24
 muleta;2.87;4.50
 corte;2.88;6.00
 bastardo;2.89;5.30
+pendejo;2.89;6.50
 abrumado;2.90;5.36
 demonio;2.91;6.47
 hongo;2.91;4.90
@@ -1007,7 +1008,7 @@ vida;8.07;6.59
 vivo;8.07;6.54
 goce;8.09;6.62
 afecto;8.10;6.19
-esperanza;8.11;6.59
+esperanza;6.5;6.59
 paz;8.11;3.49
 abrazo;8.13;5.70
 amigable;8.14;5.08
@@ -1049,7 +1050,9 @@ reprobable;2.5;7.0
 narco;3.0;7.0
 naco;2.0;7.0
 rega¤ar;3.0;5.0
-mejor;5.0;7.0
+mejor;6.6;7.1
+bien;6.5;7.0
+mal;3.0;6.0
 malo;3.0;6.0
 relajante;4.7;5.0
 perder;2.5;7.0

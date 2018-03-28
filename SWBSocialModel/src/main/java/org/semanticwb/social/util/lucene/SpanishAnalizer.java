@@ -411,6 +411,7 @@ public class SpanishAnalizer extends Analyzer {
      */
 
     //Según Octavio, tomadas como base de  http://members.unine.ch/jacques.savoy/clef/spanishSmart.txt
+    //Además yo eliminé de este arreglo, las palabras modificadores, las que se encuentra en el arreglo: SPANISH_MODIFIERS_WORDS
     private String SPANISH_STOP_WORDS[] = {
     "él",
     "es",
@@ -582,15 +583,7 @@ public class SpanishAnalizer extends Analyzer {
         "mucho",
         "muchos",
         "muy",
-        "nada",
-        "nadie",
         "ni",
-        "ningún",
-        "ninguna",
-        "ningunas",
-        "ninguno",
-        "ningunos",
-        "no",
         "nos",
         "nosotras",
         "nosotros",
@@ -598,7 +591,6 @@ public class SpanishAnalizer extends Analyzer {
         "nuestras",
         "nuestro",
         "nuestros",
-        "nunca",
         "o",
         "ocho",
         "otra",
@@ -641,7 +633,6 @@ public class SpanishAnalizer extends Analyzer {
         "quienes",
         "quiere",
         "respecto",
-        "sí",
         "sólo",
         "se",
         "señaló",
@@ -655,14 +646,12 @@ public class SpanishAnalizer extends Analyzer {
         "será",
         "serán",
         "sería",
-        "si",
         "sido",
         "siempre",
         "siendo",
         "siete",
         "sigue",
         "siguiente",
-        "sin",
         "sino",
         "sobre",
         "solamente",
@@ -719,10 +708,12 @@ public class SpanishAnalizer extends Analyzer {
         "mis"
     };
     
+    
     public String[] getSpanishStopWords()
     {
         return SPANISH_STOP_WORDS;
     }
+    
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public TokenStream tokenStream(String fieldName, Reader reader) {
