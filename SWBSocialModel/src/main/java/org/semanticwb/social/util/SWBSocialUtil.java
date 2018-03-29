@@ -490,7 +490,7 @@ public class SWBSocialUtil {
     {
         ///LOAD SPANISH MODIFIERS
         String pathToModifierWords = SWBPortal.getWorkPath()+"/models/"+SWBContext.getAdminWebSite().getId()+"/config/modifiers.txt";
-        System.out.println("Entra a Cargar modificadores en españil de ruta:"+pathToModifierWords);
+        //System.out.println("Entra a Cargar modificadores en españil de ruta:"+pathToModifierWords);
         try{
             BufferedReader modifiersBR =  new BufferedReader(new FileReader(pathToModifierWords));
             String line = "";           
@@ -499,11 +499,11 @@ public class SWBSocialUtil {
                 if(line!=null && !line.isEmpty())
                 {
                     //System.out.println("modificador en archivo:"+line);
-                    System.out.println("modificador raiz agregado:"+SWBSocialUtil.Classifier.getRootWord(line));
+                    //System.out.println("modificador raiz agregado:"+SWBSocialUtil.Classifier.getRootWord(line));
                     SPANISH_MODIFIERS_WORDS.add(SWBSocialUtil.Classifier.getRootWord(line));
                 }
             }
-            System.out.println("SPANISH_MODIFIERS_WORDS1:"+SPANISH_MODIFIERS_WORDS.size());
+            //System.out.println("SPANISH_MODIFIERS_WORDS1:"+SPANISH_MODIFIERS_WORDS.size());
         }catch(Exception e)
         {
             log.error(e);
@@ -515,7 +515,7 @@ public class SWBSocialUtil {
     {
         ///LOAD SPANISH INTENSIFIERS
         String pathToModifierWords = SWBPortal.getWorkPath()+"/models/"+SWBContext.getAdminWebSite().getId()+"/config/intensifiers.txt";
-        System.out.println("Entra a Cargar Intensificadores en español de ruta:"+pathToModifierWords);
+        //System.out.println("Entra a Cargar Intensificadores en español de ruta:"+pathToModifierWords);
         try{
             BufferedReader intensifiersBR =  new BufferedReader(new FileReader(pathToModifierWords));
             String line = "";           
@@ -524,11 +524,11 @@ public class SWBSocialUtil {
                 if(line!=null && !line.isEmpty())
                 {
                     //System.out.println("modificador en archivo:"+line);
-                    System.out.println("Intensificador raiz agregado:"+SWBSocialUtil.Classifier.getRootWord(line));
+                    //System.out.println("Intensificador raiz agregado:"+SWBSocialUtil.Classifier.getRootWord(line));
                     SPANISH_INTENSIFIERS_WORDS.add(SWBSocialUtil.Classifier.getRootWord(line));
                 }
             }
-            System.out.println("SPANISH_INTENSIFIERS_WORDS:"+SPANISH_INTENSIFIERS_WORDS.size());
+            //System.out.println("SPANISH_INTENSIFIERS_WORDS:"+SPANISH_INTENSIFIERS_WORDS.size());
         }catch(Exception e)
         {
             log.error(e);
@@ -1339,7 +1339,7 @@ public class SWBSocialUtil {
                 //Se cambia toda la frase a su modo raiz y eliminando stop words
                 text=SWBSocialUtil.Classifier.getRootWord(text);
 
-                System.out.println("ANALISIS-2-ENRAIZADO Y SIN STOP WORDS:"+text);
+                //System.out.println("ANALISIS-2-ENRAIZADO Y SIN STOP WORDS:"+text);
 
                 //Fonetizo
                 text=SWBSocialUtil.Classifier.phonematize(text);
@@ -1397,13 +1397,13 @@ public class SWBSocialUtil {
                     //word2Find=SWBSocialUtil.Classifier.phonematize(word2Find);
                     //System.out.println("word Fonematizada:"+word2Find);
                     //SentimentWords sentimentalWordObj=SentimentWords.ClassMgr.getSentimentWords(word2Find, socialAdminSite);
-                    System.out.println("lang:"+lang+",word final:"+word2Find);
+                    //System.out.println("lang:"+lang+",word final:"+word2Find);
                     if(lang.equals("es") || lang.equals("pt")){
-                        System.out.println("entra español");
+                        //System.out.println("entra español");
                            
                         if(aSentimentWords.contains(word2Find)) //La palabra en cuestion ha sido encontrada en la BD
                         {   
-                            System.out.println("entra palabra BD:"+word2Find);
+                            //System.out.println("entra palabra BD:"+word2Find);
                             SentimentWords sentimentalWordObj=SentimentWords.ClassMgr.getSentimentWords(word2Find, CONFIG_WEBSITE);
                             //System.out.println("Palabra Encontrada:"+word2Find);
                             wordsCont++;
@@ -1428,21 +1428,24 @@ public class SWBSocialUtil {
                             
                             
                             if(SPANISH_INTENSIFIERS_WORDS.contains(word2Find) && !previousWordIsIntensifier)  { //Si la palabra es un intensificador
-                                System.out.println("La palabra es un intensificador");
                                 previousWordIsIntensifier=true;
                                 intensifierWordSentimentBDValue=sentimentalWordObj.getSentimentalValue(); 
+                                //System.out.println("La palabra es un intensificador:"+intensifierWordSentimentBDValue);
                             }else if (previousWordIsIntensifier && intensifierWordSentimentBDValue>0){
-                                System.out.println("La palabra es:"+ word2Find + "Y ya había un intensificador con valor:"+intensifierWordSentimentBDValue);
+                                //System.out.println("La palabra es:"+ word2Find + "Y ya había un intensificador con valor:"+intensifierWordSentimentBDValue);
                                 sentimentalTweetValue-=intensifierWordSentimentBDValue; //Resto lo que había sumado al encontrar la palabra como Sentimental
+                                wordsCont--; //Resto wordsCont,para que no afecte en el promedio final de número de palabras y esto a la polaridad
+                                //System.out.println("La palbra anterior era un intensificador, valor actual:"+sentimentalTweetValue);
                                 if(intensifierWordSentimentBDValue<5) { //La palabra Sentimental era negativa, le resto 1 (número que yo propongo) por ser un intensificador negativo
                                     sentimentalTweetValue-=1;
-                                }else if (intensifierWordSentimentBDValue>6) {  //La palabra Sentimental era negativa, le sumo 1 (número que yo propongo) por ser un intensificador positivo
+                                }else if (intensifierWordSentimentBDValue>6) {  //La palabra Sentimental era positiva, le sumo 1 (número que yo propongo) por ser un intensificador positivo
                                     sentimentalTweetValue+=1;
                                 }
+                                //System.out.println("La palbra anterior era un intensificador, valor actual+-1:"+sentimentalTweetValue);
                                 previousWordIsIntensifier=false;
                                 intensifierWordSentimentBDValue=0;
                             }else{
-                                System.out.println("Entro a BD, pero no hizo nada de intensificadores");
+                                //System.out.println("Entro a BD, pero no hizo nada de intensificadores");
                                 previousWordIsIntensifier=false;
                                 intensifierWordSentimentBDValue=0;
                             }
@@ -1453,7 +1456,7 @@ public class SWBSocialUtil {
                             if(!previousWordIsModifier){ // Si no tiene un modificador anterior y si la palabra actual es de sentimiento neutro
                                 sentimentalTweetValue+=sentimentalWordObj.getSentimentalValue();      
                             }else{
-                                System.out.println("Se va a cambiar polaridad a:" + word2Find + ", valor:"+sentimentalWordObj.getSentimentalValue());
+                                //System.out.println("Se va a cambiar polaridad a:" + word2Find + ", valor:"+sentimentalWordObj.getSentimentalValue());
                                 if(sentimentalWordObj.getSentimentalValue()<5){ //Es negativo, se cambiará a positivo
                                     sentimentalTweetValue+=(sentimentalWordObj.getSentimentalValue()+5); //El 5 fue tomado de acuerdo a una revisión en cuanto al archivo de sentimientos
                                 }else if(sentimentalWordObj.getSentimentalValue()>6){ //Es positivo, se cambiará a negativo
@@ -1463,7 +1466,7 @@ public class SWBSocialUtil {
                             }
                         
                         }else if(SPANISH_MODIFIERS_WORDS.contains(word2Find)){    //La palabra es un modificador de polaridad
-                            System.out.println("Se detecto Modificador:"+word2Find);
+                            //System.out.println("Se detecto Modificador:"+word2Find);
                             previousWordIsModifier=true;
                         }else{
                             previousWordIsModifier=false;
@@ -1503,6 +1506,7 @@ public class SWBSocialUtil {
                     }
                 }
                
+                //System.out.println("sentimentalTweetValueFinal:"+sentimentalTweetValue);
                 if((lang.equals("es") || lang.equals("pt")) && sentimentalTweetValue>0) //Se revisa de acuerdo al promedio de sentimentalTweetValue/wordsCont, que valor sentimental posee el tweet
                 {
                     if(wordsCont>0) promSentimentalValue=sentimentalTweetValue/wordsCont;
