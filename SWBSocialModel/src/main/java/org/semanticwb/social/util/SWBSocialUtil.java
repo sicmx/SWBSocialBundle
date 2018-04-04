@@ -34,8 +34,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.SocketException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -62,6 +70,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.semanticwb.Logger;
 import org.semanticwb.SWBPortal;
 import org.semanticwb.SWBUtils;
@@ -1837,6 +1847,82 @@ public class SWBSocialUtil {
             } else {
                 return phrase;
             }
+        }
+        
+        /**
+         * Obtiene la clasificacion de sentimientos de acuerdo al clasificador implementado en
+         * http://dev.ingeotec.mx/sentiment por la DAIC - INFOTEC
+         * @param message texto a analizar y clasificar
+         * @return el conjunto de valores generados por el clasificador con su 
+         * correspondiente etiqueta
+         */
+        public static JSONObject getExternalClassification(String message) {
+            
+            URL serverUrl = null;
+            HttpURLConnection conex = null;
+            OutputStream out = null;
+            InputStream in = null;
+            //String response = null;
+            JSONObject body = new JSONObject();
+            JSONArray data = new JSONArray();
+            JSONObject messageText = new JSONObject();
+            JSONObject remoteClassif = new JSONObject();
+            
+            body.put("version", "1.2");
+            body.put("auth", "demo");
+            messageText.put("text", message);
+            data.put(messageText);
+            body.put("data", data);
+            
+            try {
+                serverUrl = new URL("http://dev.ingeotec.mx/sentiment");
+            } catch (MalformedURLException mue) {}
+            
+            try {
+                if (null != serverUrl) {
+                    conex = (HttpURLConnection) serverUrl.openConnection();
+                }
+                if (null != conex) {
+                    conex.setConnectTimeout(5000);
+                    conex.setReadTimeout(5000);
+                    conex.setRequestMethod("POST");
+                    conex.setDoOutput(true);
+                    conex.connect();
+                    out = conex.getOutputStream();
+                    out.write(body.toString().getBytes("UTF-8"));
+                    in = conex.getInputStream();
+                    
+                    Reader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                    StringBuilder remoteResponse = new StringBuilder(256);
+                    char[] buffer = new char[1000];
+                    int charsRead = 0;
+                    while (charsRead >= 0) {
+                        remoteResponse.append(buffer, 0, charsRead);
+                        charsRead = reader.read(buffer);
+                    }
+                    reader.close();
+                    remoteClassif = new JSONObject(remoteResponse.toString());
+                    
+                }
+            } catch (java.io.IOException ioe) {
+                //response = getResponse(conex.getErrorStream());
+                remoteClassif = null;
+                //ioe.printStackTrace();
+            } finally {
+                try {
+                    if (null != in) {
+                        in.close();
+                    }
+                    if (null != out) {
+                        out.close();
+                    }
+                } catch (IOException ioe) {}
+                if (conex != null) {
+                    conex.disconnect();
+                }
+            }
+            
+            return remoteClassif;
         }
         
     }
