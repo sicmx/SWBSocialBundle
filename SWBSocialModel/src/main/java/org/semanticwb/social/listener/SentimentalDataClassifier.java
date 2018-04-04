@@ -249,7 +249,7 @@ public class SentimentalDataClassifier {
         //System.out.println("Geo-1---Lat:"+stream.getGeoCenterLatitude()+"/long:"+stream.getGeoCenterLongitude()+",classifyGeoLocation:"+classifyGeoLocation);
         //System.out.println("Geo-2--Lat:"+externalPost.getLatitude()+",Long:"+externalPost.getLongitude());
         if (stream.getGeoCenterLatitude() != 0 && stream.getGeoCenterLongitude() != 0 && classifyGeoLocation) {
-            //System.out.println("Geo-1---Lat:"+stream.getGeoCenterLatitude()+"/long:"+stream.getGeoCenterLongitude());
+            //System.out.println("Geo-1---LatJoerge:"+stream.getGeoCenterLatitude()+"/long:"+stream.getGeoCenterLongitude());
             if (externalPost.getLatitude() != 0 && externalPost.getLongitude() != 0) {
                 //System.out.println("Geo-2--Lat:"+externalPost.getLatitude()+",Long:"+externalPost.getLongitude());
                 double eart_Radio = SWBSocialUtil.EART_RADIUS_KM; //Por defecto se mide en Kilometros

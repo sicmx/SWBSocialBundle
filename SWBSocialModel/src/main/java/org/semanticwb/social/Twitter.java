@@ -264,11 +264,20 @@ public class Twitter extends org.semanticwb.social.base.TwitterBase {
         //  .setOAuthAccessToken("1137512760-v65LXmL07hgaOzZPGN6xlSiJGPNCx3BkipAuvnZ")
         //  .setOAuthAccessTokenSecret("F4H9ruXp8YReBG28OTQyeEkHkHudm7IzMIbP8Ep8bzw");
         
+        
         cb.setDebugEnabled(true)
           .setOAuthConsumerKey(getAppKey())
           .setOAuthConsumerSecret(getSecretKey())
           .setOAuthAccessToken(getAccessToken())
           .setOAuthAccessTokenSecret(getAccessTokenSecret());
+        
+        /*
+        cb.setDebugEnabled(true)
+          .setOAuthConsumerKey("hFze5AyPstGAWxGZOwuyaFVgX")
+          .setOAuthConsumerSecret("yR3ifgw15hNR4aCvrVV9AacHcRVY3O7O4B7OunXPZqmWhHFNvd")
+          .setOAuthAccessToken("47531700-BWlvGV4vIHfbSosm7HPTlqbDl5iZy7ppz55WwKciF")
+          .setOAuthAccessTokenSecret("tr3TCaG0x5rUOB4H7xbacqEhaq3Zt5GLHFyRjZduZBBDZ");
+        */
         
         /*
          * When a twitter object is given use:
@@ -401,8 +410,9 @@ public class Twitter extends org.semanticwb.social.base.TwitterBase {
             
             twitter4j.Query query = new Query(searchPhrases);
             if(stream.getGeoCenterLatitude() != 0 && stream.getGeoCenterLongitude() != 0 && stream.getGeoRadio() > 0){
-                String distance_unit="km";
-                if(stream.getGeoDistanceUnit()!=null) distance_unit=stream.getGeoDistanceUnit();
+                Query.Unit distance_unit=query.KILOMETERS;
+                if(stream.getGeoDistanceUnit()!=null && stream.getGeoDistanceUnit().equalsIgnoreCase("KM")) distance_unit=query.KILOMETERS;
+                if(stream.getGeoDistanceUnit()!=null && stream.getGeoDistanceUnit().equalsIgnoreCase("MI")) distance_unit=query.MILES;
                 if(stream.getGeoRadio() < 50){
                     query.setGeoCode(new GeoLocation(stream.getGeoCenterLatitude(), stream.getGeoCenterLongitude()), 50, distance_unit);//(latitude, longitude), radius, units of distance
                 }else{
@@ -439,7 +449,7 @@ public class Twitter extends org.semanticwb.social.base.TwitterBase {
             aListExternalPost = new ArrayList();
             do{
                 try{
-                    //System.out.println("QUERY-Geprgy....: " + query);
+                    //System.out.println("QUERY-Georgy24....: " + query);
                     twitter4j.QueryResult result = twitter.search(query);
                     int noOfTweets = result.getTweets().size();
                     //System.out.println("\ntweets by request: " + noOfTweets);                    
