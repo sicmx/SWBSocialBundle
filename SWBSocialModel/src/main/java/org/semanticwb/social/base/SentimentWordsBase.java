@@ -1,6 +1,10 @@
 package org.semanticwb.social.base;
 
 
+/**
+ * Autor: Jorge Jiménez
+ */
+
    /**
    * Conjunto de Palabras a buscar dentro de los Post que llegan por el Listener y con las cuales se podra determinar el sentimiento y la intensidad de los mismos(Post). 
    */

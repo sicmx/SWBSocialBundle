@@ -144,6 +144,7 @@ public class SWBSocialUtil {
     static private SWBSocialUtil instance;
     static ArrayList<String> aDoubles = new ArrayList();
     static HashMap<String, String> hmapChanges = new HashMap();
+      
     //SENTIMENTAL STATATIC CONTANTS
     static public int SENTIMENT_NEUTRAL = 0;
     static public int SENTIMENT_POSITIVE = 1;
@@ -163,6 +164,8 @@ public class SWBSocialUtil {
     static private ArrayList<String> aSentimentWords=new ArrayList();
     static private HashMap<String, Double> englishDictionary;
     static private ArrayList<String> aENGLISH_STOP_WORDS=new ArrayList();
+    static private ArrayList<String> SPANISH_MODIFIERS_WORDS=new ArrayList();
+    static private ArrayList<String> SPANISH_INTENSIFIERS_WORDS=new ArrayList();
     //static private int NUMDAYS2REFRESH_USERDATA=5;
     
     public static final int POST_TYPE_MESSAGE=1;
@@ -212,6 +215,7 @@ public class SWBSocialUtil {
     public HashMap getChangesMap() {
         return hmapChanges;
     }
+    
 /*
     @Override
     public void destroy() {
@@ -274,7 +278,8 @@ public class SWBSocialUtil {
         hmapChanges.put("gi", "ji");
         hmapChanges.put("bb", "b");
         hmapChanges.put("c", "k");
-
+        
+       
         /*
         //Revisión de propiedad de sitio Admin que indica el número de días que se mantendra en cache datos del usuario
         if(SWBSocialUtil.Util.getModelPropertyValue(SWBContext.getAdminWebSite(), "numDaysToCheckKlout")!=null)
@@ -322,6 +327,12 @@ public class SWBSocialUtil {
         
         //Carga Palabras sentimentales memoría
         loadSentimentWords();
+        
+        //carga mofificadores de polaridad
+        loadModifiers();
+        
+        //carga intensificadores de polaridad
+        loadIntensifiers();
         
         loadGeoStatesPolygons();
 
@@ -484,6 +495,57 @@ public class SWBSocialUtil {
         
     }
     
+    //Carga modificadores
+    public static void loadModifiers()
+    {
+        ///LOAD SPANISH MODIFIERS
+        String pathToModifierWords = SWBPortal.getWorkPath()+"/models/"+SWBContext.getAdminWebSite().getId()+"/config/modifiers.txt";
+        //System.out.println("Entra a Cargar modificadores en españil de ruta:"+pathToModifierWords);
+        try{
+            BufferedReader modifiersBR =  new BufferedReader(new FileReader(pathToModifierWords));
+            String line = "";           
+            while((line = modifiersBR.readLine()) != null)
+            {
+                if(line!=null && !line.isEmpty())
+                {
+                    //System.out.println("modificador en archivo:"+line);
+                    //System.out.println("modificador raiz agregado:"+SWBSocialUtil.Classifier.getRootWord(line));
+                    SPANISH_MODIFIERS_WORDS.add(SWBSocialUtil.Classifier.getRootWord(line));
+                }
+            }
+            //System.out.println("SPANISH_MODIFIERS_WORDS1:"+SPANISH_MODIFIERS_WORDS.size());
+        }catch(Exception e)
+        {
+            log.error(e);
+        }
+    }
+    
+    //Carga intensificadores
+    public static void loadIntensifiers()
+    {
+        ///LOAD SPANISH INTENSIFIERS
+        String pathToModifierWords = SWBPortal.getWorkPath()+"/models/"+SWBContext.getAdminWebSite().getId()+"/config/intensifiers.txt";
+        //System.out.println("Entra a Cargar Intensificadores en español de ruta:"+pathToModifierWords);
+        try{
+            BufferedReader intensifiersBR =  new BufferedReader(new FileReader(pathToModifierWords));
+            String line = "";           
+            while((line = intensifiersBR.readLine()) != null)
+            {
+                if(line!=null && !line.isEmpty())
+                {
+                    //System.out.println("modificador en archivo:"+line);
+                    //System.out.println("Intensificador raiz agregado:"+SWBSocialUtil.Classifier.getRootWord(line));
+                    SPANISH_INTENSIFIERS_WORDS.add(SWBSocialUtil.Classifier.getRootWord(line));
+                }
+            }
+            //System.out.println("SPANISH_INTENSIFIERS_WORDS:"+SPANISH_INTENSIFIERS_WORDS.size());
+        }catch(Exception e)
+        {
+            log.error(e);
+        }
+    }
+    
+    
     //Carga las palabras sentimentales a memoría
     public static void loadSentimentWords()
     {
@@ -575,13 +637,13 @@ public class SWBSocialUtil {
             //System.out.println("Entra a Cargar stopwords Ingles:"+pathToEnglishStopWords);
             try{
                 BufferedReader stopwBR =  new BufferedReader(new FileReader(pathToEnglishStopWords));
-                int lineNumber = 0;
+                //int lineNumber = 0;
                 String line = "";           
                 while((line = stopwBR.readLine()) != null)
                 {
                     if(line!=null && !line.isEmpty())
                     {
-                        lineNumber++;
+                        //lineNumber++;
                         aENGLISH_STOP_WORDS.add(line);
                     }
                 }
@@ -1284,10 +1346,10 @@ public class SWBSocialUtil {
                 text=SWBSocialUtil.Classifier.normalizer(text).getNormalizedPhrase();
 
                 //System.out.println("ANALISIS-1-NORMALIZADO:"+text);
-                //Se cambia toda la frase a su modo raiz
+                //Se cambia toda la frase a su modo raiz y eliminando stop words
                 text=SWBSocialUtil.Classifier.getRootWord(text);
 
-                //System.out.println("ANALISIS-2-ENRAIZADO:"+text);
+                //System.out.println("ANALISIS-2-ENRAIZADO Y SIN STOP WORDS:"+text);
 
                 //Fonetizo
                 text=SWBSocialUtil.Classifier.phonematize(text);
@@ -1320,6 +1382,9 @@ public class SWBSocialUtil {
                 double totalScore = 0;
                 ArrayList<String> aListWords=new ArrayList();
                 StringTokenizer st = new StringTokenizer(text);
+                boolean previousWordIsModifier = false;
+                boolean previousWordIsIntensifier=false;
+                float intensifierWordSentimentBDValue=0;
                 while (st.hasMoreTokens())
                 {
                     String word2Find=st.nextToken();
@@ -1342,29 +1407,82 @@ public class SWBSocialUtil {
                     //word2Find=SWBSocialUtil.Classifier.phonematize(word2Find);
                     //System.out.println("word Fonematizada:"+word2Find);
                     //SentimentWords sentimentalWordObj=SentimentWords.ClassMgr.getSentimentWords(word2Find, socialAdminSite);
-                    if(lang.equals("es") && aSentimentWords.contains(word2Find)) //La palabra en cuestion ha sido encontrada en la BD
-                    {   
-                        SentimentWords sentimentalWordObj=SentimentWords.ClassMgr.getSentimentWords(word2Find, CONFIG_WEBSITE);
-                        //System.out.println("Palabra Encontrada:"+word2Find);
-                        wordsCont++;
-                        IntensiveTweetValue+=sentimentalWordObj.getIntensityValue();
-                        //Veo si la palabra cuenta con mas de dos caracteres(Normalmente el inicial de la palabra y talvez otro que
-                        //hayan escrito por equivocación) en mayusculas
-                        //De ser así, se incrementaría el valor para la intensidad
+                    //System.out.println("lang:"+lang+",word final:"+word2Find);
+                    if(lang.equals("es") || lang.equals("pt")){
+                        //System.out.println("entra español");
+                           
+                        if(aSentimentWords.contains(word2Find)) //La palabra en cuestion ha sido encontrada en la BD
+                        {   
+                            //System.out.println("entra palabra BD:"+word2Find);
+                            SentimentWords sentimentalWordObj=SentimentWords.ClassMgr.getSentimentWords(word2Find, CONFIG_WEBSITE);
+                            //System.out.println("Palabra Encontrada:"+word2Find);
+                            wordsCont++;
+                            IntensiveTweetValue+=sentimentalWordObj.getIntensityValue();
+                            //Veo si la palabra cuenta con mas de dos caracteres(Normalmente el inicial de la palabra y talvez otro que
+                            //hayan escrito por equivocación) en mayusculas
+                            //De ser así, se incrementaría el valor para la intensidad
+                            //TODO: Revisar Intensificadores (Palabras de arreglo)
 
-                        if(SWBSocialUtil.Strings.isIntensiveWordByUpperCase(word2FindTmp, 3))
-                        {
-                            //System.out.println("VENIA PALABRA CON MAYUSCULAS:"+word2Find);
-                            IntensiveTweetValue+=1;
-                        }
-                        //Veo si en la palabra se repiten mas de 2 caracteres para los que se pueden repetir hasta 2 veces (Arrar Doubles)
-                        // y mas de 1 cuando no estan dichos caracteres en docho array, si es así entonces se incrementa la intensidad
+                            if(SWBSocialUtil.Strings.isIntensiveWordByUpperCase(word2FindTmp, 3))
+                            {
+                                //System.out.println("VENIA PALABRA CON MAYUSCULAS:"+word2Find);
+                                IntensiveTweetValue+=1;
+                            }
+                            //Veo si en la palabra se repiten mas de 2 caracteres para los que se pueden repetir hasta 2 veces (Arrar Doubles)
+                            // y mas de 1 cuando no estan dichos caracteres en docho array, si es así entonces se incrementa la intensidad
 
-                        if(normalizerCharDuplicate.isCharDuplicate()){
-                            //System.out.println("VENIA PALABRA CON CARACTERES REPETIDOS:"+word2Find);
-                            IntensiveTweetValue+=1;
+                            if(normalizerCharDuplicate.isCharDuplicate()){
+                                //System.out.println("VENIA PALABRA CON CARACTERES REPETIDOS:"+word2Find);
+                                IntensiveTweetValue+=1;
+                            }
+                            
+                            
+                            if(SPANISH_INTENSIFIERS_WORDS.contains(word2Find) && !previousWordIsIntensifier)  { //Si la palabra es un intensificador
+                                previousWordIsIntensifier=true;
+                                intensifierWordSentimentBDValue=sentimentalWordObj.getSentimentalValue(); 
+                                //System.out.println("La palabra es un intensificador:"+intensifierWordSentimentBDValue);
+                            }else if (previousWordIsIntensifier && intensifierWordSentimentBDValue>0){
+                                //System.out.println("La palabra es:"+ word2Find + "Y ya había un intensificador con valor:"+intensifierWordSentimentBDValue);
+                                sentimentalTweetValue-=intensifierWordSentimentBDValue; //Resto lo que había sumado al encontrar la palabra como Sentimental
+                                wordsCont--; //Resto wordsCont,para que no afecte en el promedio final de número de palabras y esto a la polaridad
+                                //System.out.println("La palbra anterior era un intensificador, valor actual:"+sentimentalTweetValue);
+                                if(intensifierWordSentimentBDValue<5) { //La palabra Sentimental era negativa, le resto 1 (número que yo propongo) por ser un intensificador negativo
+                                    sentimentalTweetValue-=1;
+                                }else if (intensifierWordSentimentBDValue>6) {  //La palabra Sentimental era positiva, le sumo 1 (número que yo propongo) por ser un intensificador positivo
+                                    sentimentalTweetValue+=1;
+                                }
+                                //System.out.println("La palbra anterior era un intensificador, valor actual+-1:"+sentimentalTweetValue);
+                                previousWordIsIntensifier=false;
+                                intensifierWordSentimentBDValue=0;
+                            }else{
+                                //System.out.println("Entro a BD, pero no hizo nada de intensificadores");
+                                previousWordIsIntensifier=false;
+                                intensifierWordSentimentBDValue=0;
+                            }
+                            
+                            
+                            
+                            //if(!previousWordIsModifier || (sentimentalWordObj.getSentimentalValue()>=5 && sentimentalWordObj.getSentimentalValue()<=6)){ // Si no tiene un modificador anterior y si la palabra actual es de sentimiento neutro
+                            if(!previousWordIsModifier){ // Si no tiene un modificador anterior y si la palabra actual es de sentimiento neutro
+                                sentimentalTweetValue+=sentimentalWordObj.getSentimentalValue();      
+                            }else{
+                                //System.out.println("Se va a cambiar polaridad a:" + word2Find + ", valor:"+sentimentalWordObj.getSentimentalValue());
+                                if(sentimentalWordObj.getSentimentalValue()<5){ //Es negativo, se cambiará a positivo
+                                    sentimentalTweetValue+=(sentimentalWordObj.getSentimentalValue()+5); //El 5 fue tomado de acuerdo a una revisión en cuanto al archivo de sentimientos
+                                }else if(sentimentalWordObj.getSentimentalValue()>6){ //Es positivo, se cambiará a negativo
+                                    sentimentalTweetValue+=(sentimentalWordObj.getSentimentalValue()-5); //El 5 fue tomado de acuerdo a una revisión en cuanto al archivo de sentimientos
+                                }
+                                previousWordIsModifier=false;
+                            }
+                        
+                        }else if(SPANISH_MODIFIERS_WORDS.contains(word2Find)){    //La palabra es un modificador de polaridad
+                            //System.out.println("Se detecto Modificador:"+word2Find);
+                            previousWordIsModifier=true;
+                        }else{
+                            previousWordIsModifier=false;
+                            previousWordIsIntensifier=false;
+                            intensifierWordSentimentBDValue=0;
                         }
-                        sentimentalTweetValue+=sentimentalWordObj.getSentimentalValue();                        
                         
                     }else if(lang!=null && lang.equals("en"))
                     {   
@@ -1398,7 +1516,8 @@ public class SWBSocialUtil {
                     }
                 }
                
-                if(lang.equals("es") && sentimentalTweetValue>0) //Se revisa de acuerdo al promedio de sentimentalTweetValue/wordsCont, que valor sentimental posee el tweet
+                //System.out.println("sentimentalTweetValueFinal:"+sentimentalTweetValue);
+                if((lang.equals("es") || lang.equals("pt")) && sentimentalTweetValue>0) //Se revisa de acuerdo al promedio de sentimentalTweetValue/wordsCont, que valor sentimental posee el tweet
                 {
                     if(wordsCont>0) promSentimentalValue=sentimentalTweetValue/wordsCont;
                     else promSentimentalValue=sentimentalTweetValue;
@@ -1413,10 +1532,7 @@ public class SWBSocialUtil {
                         //post.setPostSentimentalType(2); //Tweet Negativo, valor de 1 (Esto yo lo determiné)
                         sentimentalTweetValueType=2;
                     }                                      
-                }
-                
-                //Para Ingles
-                if(lang!=null && lang.equals("en"))
+                }else if(lang!=null && lang.equals("en")) //Para Ingles
                 {
                     if(totalScore>=0.75 || sentimentalTweetValue>=7){
                         //return "Strong positive";
