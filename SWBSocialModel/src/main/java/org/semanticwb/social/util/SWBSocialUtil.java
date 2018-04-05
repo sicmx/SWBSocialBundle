@@ -1984,7 +1984,7 @@ public class SWBSocialUtil {
             JSONObject messageText = new JSONObject();
             JSONObject remoteClassif = new JSONObject();
             
-            body.put("version", "1.2");
+            body.put("version", "1.3");
             body.put("auth", "demo");
             messageText.put("text", message);
             data.put(messageText);
