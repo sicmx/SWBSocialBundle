@@ -302,6 +302,9 @@ public class Instagram extends org.semanticwb.social.base.InstagramBase
                 String max_tag_id = null;
                 
                 
+                //System.out.println("respuesta JorgeInsta1Jime:"+respuesta.toString());
+                
+                
                 JSONArray arr = respuesta.getJSONArray("data");
                 //System.out.println("SIZE of data:" + arr.length());
                 if(arr.length()==0){
@@ -437,8 +440,8 @@ public class Instagram extends org.semanticwb.social.base.InstagramBase
                         next = respuesta.getJSONObject("pagination").getString("next_url");                        
                         //System.out.println("the next Request:" + next);
                     }
-                    if(!respuesta.getJSONObject("pagination").isNull("next_max_tag_id")){
-                        max_tag_id = respuesta.getJSONObject("pagination").getString("next_max_tag_id");                        
+                    if(!respuesta.getJSONObject("pagination").isNull("max_tag_id")){
+                        max_tag_id = respuesta.getJSONObject("pagination").getString("max_tag_id");                        
                         //System.out.println("the next Request:" + max_tag_id);
                         params.put("max_tag_id", max_tag_id);
                     }else{//EXIT
@@ -674,8 +677,8 @@ public class Instagram extends org.semanticwb.social.base.InstagramBase
                         //params.put("max_tag_id", max_tag_id);
                     }
                    
-                    if(!respuesta.getJSONObject("pagination").isNull("next_max_tag_id")){
-                        max_tag_id = respuesta.getJSONObject("pagination").getString("next_max_tag_id");                        
+                    if(!respuesta.getJSONObject("pagination").isNull("max_tag_id")){
+                        max_tag_id = respuesta.getJSONObject("pagination").getString("max_tag_id");                        
                         System.out.println("the next Request:" + max_tag_id);
                         params.put("max_tag_id", max_tag_id);
                     }else{//EXIT
