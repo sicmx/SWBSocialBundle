@@ -84,7 +84,7 @@
     <title>SWBSocial Sentiment Analysis Map</title>
     <!--AIzaSyA_8bWaWXaKlJV2XgZt-RYwRAsp6S0J7iw-->
     <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?sensor=false&key="+apiKey>  
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCD0FxOIy_HmAwliM9DfOFVcOtj9YQYP-A">  
     </script>
     <script type="text/javascript">
       document.write('<script type="text/javascript" src="<%=SWBPortal.getContextPath()%>/swbadmin/js/markermanager.js"><' + '/script>');

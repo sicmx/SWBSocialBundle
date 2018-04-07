@@ -94,11 +94,13 @@ public class LatLngRadioMap extends org.semanticwb.social.base.LatLngRadioMapBas
             if(stream.getGeoCenterLongitude()!=0)longitude=""+stream.getGeoCenterLongitude();
             if(stream.getGeoRadio()>0)radio=""+stream.getGeoRadio();
             
+            ret.append("<script type=\"text/javascript\" src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyCD0FxOIy_HmAwliM9DfOFVcOtj9YQYP-A\"></script>");
+            
             ret.append("<div dojoType=\"dojox.layout.ContentPane\">");
             ret.append("	<script type=\"dojo/method\">");
             
             
-            //ret.append("<script type=\"text/javascript\" src=\"http://maps.googleapis.com/maps/api/js?sensor=false\"></script>");
+            
             //ret.append("<script type=\"text/javascript\" src=\"/swbadmin/js/jquery/jquery-1.4.4.min.js\"></script>");
             //ret.append("<script type=\"text/javascript\" language=\"javascript\">");
             
@@ -146,8 +148,13 @@ public class LatLngRadioMap extends org.semanticwb.social.base.LatLngRadioMapBas
             ret.append("}");
             ret.append("Radius = $(\"#geoRadio_" + stream.getId() +"\").val();");
             ret.append("DrawCircle(Map, Location, Radius);");
+            ret.append("if (Location!=null){");
             ret.append("$(\"#geoCenterLatitude_" + stream.getId() + "\").val(Location.lat().toFixed(5));");
             ret.append("$(\"#geoCenterLongitude_" + stream.getId() + "\").val(Location.lng().toFixed(5));");
+            ret.append("}else{");
+            ret.append("$(\"#geoCenterLatitude_" + stream.getId() + "\").val(0);");
+            ret.append("$(\"#geoCenterLongitude_" + stream.getId() + "\").val(0);");
+            ret.append("}");
             /*ret.append("setParentValue('geoCenterLatitude_"+stream.getId()+"', Location.lat().toFixed(5));");
             ret.append("setParentValue('geoCenterLongitude_"+stream.getId()+"', Location.lng().toFixed(5));");
             ret.append("setParentValue('geoRadio_"+stream.getId()+"', Radius);");*/
