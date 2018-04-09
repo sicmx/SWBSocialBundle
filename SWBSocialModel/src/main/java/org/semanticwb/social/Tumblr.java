@@ -59,7 +59,9 @@ import javax.servlet.http.HttpSession;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.basic.DefaultOAuthConsumer;
-import oauth.signpost.basic.DefaultOAuthProvider;
+//import oauth.signpost.basic.DefaultOAuthProvider;
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
@@ -116,12 +118,12 @@ public class Tumblr extends org.semanticwb.social.base.TumblrBase {
                     SWBPortal.getWebWorkPath() + "/models/SWBAdmin/jsp/oauth/callbackTumblr.jsp";
             String tumblrConsumerKey = this.getAppKey()!= null ? this.getAppKey() : "" ;
             String tumblrSecretKey = this.getSecretKey()!= null ? this.getSecretKey() : ""; 
-            
-            consumer = new DefaultOAuthConsumer(tumblrConsumerKey,tumblrSecretKey);
-            provider = new DefaultOAuthProvider(
-                    "http://www.tumblr.com/oauth/request_token", 
-                    "http://www.tumblr.com/oauth/access_token",
-                    "http://www.tumblr.com/oauth/authorize");
+            consumer = new CommonsHttpOAuthConsumer(tumblrConsumerKey,tumblrSecretKey);
+            //consumer.setTokenWithSecret("CfxLVhrv8BBqUdtJQUl6Jmgmql0HTexEBSzXz6f2qs5dyLygiP", "mMUKr1a5duAsncPJywS4ExRXgtvHXPgt4EbFlSVEqL4WcN1Oml");
+            provider = new CommonsHttpOAuthProvider(
+                    "https://www.tumblr.com/oauth/request_token", 
+                    "https://www.tumblr.com/oauth/access_token",
+                    "https://www.tumblr.com/oauth/authorize");
             String url = provider.retrieveRequestToken(consumer,callbackURL);
             // Guardo vliebles en session para usarlos en el callback
             HttpSession httpSession = request.getSession();
@@ -437,8 +439,12 @@ public class Tumblr extends org.semanticwb.social.base.TumblrBase {
             externalPost.setCreatorName(post.getBlogName());
         }
         if(post.getClient()!= null && post.getBlogName()!= null){
-            if(post.getClient().blogAvatar(post.getBlogName())!= null){
-                externalPost.setCreatorPhotoUrl(post.getClient().blogAvatar(post.getBlogName()));
+            try{
+                if(post.getClient().blogAvatar(post.getBlogName(), null)!= null){
+                    externalPost.setCreatorPhotoUrl(post.getClient().blogAvatar(post.getBlogName()));
+                }
+            }catch(Exception err){
+                java.util.logging.Logger.getLogger(Tumblr.class.getName()).log(Level.SEVERE, null, err);
             }
         }
       

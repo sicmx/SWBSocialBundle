@@ -95,6 +95,12 @@
             <artifactId>signpost-core</artifactId>
             <version>1.2.1.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/oauth.signpost/signpost-commonshttp4 -->
+        <dependency>
+            <groupId>oauth.signpost</groupId>
+            <artifactId>signpost-commonshttp4</artifactId>
+            <version>1.2.1.2</version>
+        </dependency>
         <dependency>
             <groupId>com.flickr4java</groupId>
             <artifactId>flickr4java</artifactId>

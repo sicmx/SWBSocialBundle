@@ -200,7 +200,6 @@ public class SocialWebResource extends GenericAdmResource
                 out.println("<p>" + paramRequest.getLocaleString("authenticated") + "</p>");
                 String permission2Add = "";
                 boolean retryAskPerm = false;
-
                 if (isFacebookNet) {
                     String checkPubPerm = null;
                     if (!((Facebook) socialNetwork).isIsFanPage()) {

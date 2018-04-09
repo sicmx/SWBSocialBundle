@@ -161,8 +161,12 @@ public class TumblrDashboard  extends GenericResource {
             Iterator<Post> iteratorPost = userDashboardPost.iterator();
             while(iteratorPost.hasNext()){
                 Post next = iteratorPost.next();
-                if(!avatarImages.containsKey(next.getBlogName())){
-                    avatarImages.put(next.getBlogName(), client.blogAvatar(next.getBlogName()));
+                try{
+                    if(!avatarImages.containsKey(next.getBlogName()) && client.blogAvatar(next.getBlogName(), null) != null){
+                        avatarImages.put(next.getBlogName(), client.blogAvatar(next.getBlogName(), null));
+                    }
+                }catch(Exception err){
+                    java.util.logging.Logger.getLogger(TumblrDashboard.class.getName()).log(Level.SEVERE, null, err);
                 }
             }
             Iterator<Blog> iteratorBlogs = client.userFollowing().iterator();
