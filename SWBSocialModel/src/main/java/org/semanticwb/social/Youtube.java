@@ -1751,7 +1751,7 @@ public class Youtube extends org.semanticwb.social.base.YoutubeBase {
 
         if(stream.getPhrase() != null && !stream.getPhrase().trim().isEmpty()){//OR (Default)
             orPhrases = stream.getPhrase();            
-            orPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(orPhrases);
+            //orPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(orPhrases);
             orPhrases = orPhrases.trim().replaceAll("\\s+", " "); //replace multiple spaces beetwen words for one only one space
             String words[] = orPhrases.split(" ");
             int wordsNumber = words.length;
@@ -1769,7 +1769,7 @@ public class Youtube extends org.semanticwb.social.base.YoutubeBase {
         
         if(stream.getStream_allPhrases() != null && !stream.getStream_allPhrases().trim().isEmpty()){//All phrases
             allPhrases = stream.getStream_allPhrases();
-            allPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(allPhrases);
+            //allPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(allPhrases);
             allPhrases = allPhrases.trim().replaceAll("\\s+", " "); //replace multiple spaces beetwen words for only one space
             String words[] = allPhrases.split(" ");
             int wordsNumber = words.length;
@@ -1786,7 +1786,7 @@ public class Youtube extends org.semanticwb.social.base.YoutubeBase {
         }
         if(stream.getStream_notPhrase() != null && !stream.getStream_notPhrase().trim().isEmpty()){//Not phrases
             notPhrases = stream.getStream_notPhrase();
-            notPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(notPhrases);
+            //notPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(notPhrases);
             notPhrases = notPhrases.trim().replaceAll("\\s+", " "); //replace multiple spaces beetwen words for one only one space
             String words[] = notPhrases.split(" ");
             int wordsNumber = words.length;
@@ -1800,7 +1800,7 @@ public class Youtube extends org.semanticwb.social.base.YoutubeBase {
         }
         if(stream.getStream_exactPhrase() != null && !stream.getStream_exactPhrase().trim().isEmpty()){//Exact phrase
             exactPhrases = stream.getStream_exactPhrase();
-            exactPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(exactPhrases);
+            //exactPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(exactPhrases);
             exactPhrases = exactPhrases.trim().replaceAll("\\s+", " "); //replace multiple spaces beetwen words for one only one space
             exactPhrases = "\"" + exactPhrases + "\"";
         }

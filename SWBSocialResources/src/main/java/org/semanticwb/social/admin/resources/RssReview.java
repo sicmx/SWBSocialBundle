@@ -83,6 +83,7 @@ public class RssReview extends GenericResource{
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
             doc.getDocumentElement().normalize();
+            //System.out.println("is George:"+is.);
             //String rssStr=SWBUtils.IO.readInputStream(is);
             //rssStr=rssStr.replaceAll("~", "");
             //System.out.println("rssStr:"+rssStr);
@@ -159,7 +160,6 @@ public class RssReview extends GenericResource{
                                 for(int k=0;k<amsgWords.size();k++)
                                 {
                                     String word=amsgWords.get(k);
-                                    System.out.println("Entra a RssListenerTask/run-5:"+word);
                                     if(node.getFirstChild()!=null && node.getFirstChild().getNodeValue().toLowerCase().indexOf(word)>-1)
                                     {
                                         createCommunityNew=true;
@@ -171,7 +171,6 @@ public class RssReview extends GenericResource{
                         }
                         if(createCommunityNew)
                         {
-                            System.out.println("Entra a RssListenerTask/run-6");
                             CommunityNews comNews=new CommunityNews();
                             comNews.setNode(nListItems.item(i));
                             swbNews.add(comNews);

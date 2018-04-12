@@ -714,7 +714,7 @@ public class Instagram extends org.semanticwb.social.base.InstagramBase
         String exactPhrases = "";
         if(stream.getPhrase() != null && !stream.getPhrase().trim().isEmpty()){//Exact phrase
             exactPhrases = stream.getPhrase();
-            exactPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(exactPhrases);
+            //exactPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(exactPhrases);
             exactPhrases = exactPhrases.split(" ")[0];
         }
         

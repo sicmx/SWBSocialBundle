@@ -407,7 +407,9 @@ public class Twitter extends org.semanticwb.social.base.TwitterBase {
             if(searchPhrases == null || searchPhrases.isEmpty()){
                 return;
             }*/
-            
+            //System.out.println("TwutterJ-a Abuscar:"+searchPhrases);
+            searchPhrases=searchPhrases.replaceAll("\"", "");
+            //System.out.println("TwutterJ-a Abuscar2:"+searchPhrases);
             twitter4j.Query query = new Query(searchPhrases);
             if(stream.getGeoCenterLatitude() != 0 && stream.getGeoCenterLongitude() != 0 && stream.getGeoRadio() > 0){
                 Query.Unit distance_unit=query.KILOMETERS;
@@ -1169,8 +1171,10 @@ public class Twitter extends org.semanticwb.social.base.TwitterBase {
         String allPhrases ="";
         String fromAccounts = "";
         if(stream.getPhrase() != null && !stream.getPhrase().trim().isEmpty()){//OR (Default)
-            orPhrases = stream.getPhrase();            
-            orPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(orPhrases);
+            orPhrases = stream.getPhrase();       
+            System.out.println("orPhrases1:"+orPhrases);
+            //orPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(orPhrases);
+            System.out.println("orPhrases2:"+orPhrases);
             orPhrases = orPhrases.trim().replaceAll("\\s+", " "); //replace multiple spaces beetwen words for one only one space
             String words[] = orPhrases.split(" ");
             int wordsNumber = words.length;
@@ -1187,7 +1191,7 @@ public class Twitter extends org.semanticwb.social.base.TwitterBase {
         }
         if(stream.getStream_allPhrases() != null && !stream.getStream_allPhrases().trim().isEmpty()){//All phrases
             allPhrases = stream.getStream_allPhrases();
-            allPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(allPhrases);
+            //allPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(allPhrases);
             allPhrases = allPhrases.trim().replaceAll("\\s+", " "); //replace multiple spaces beetwen words for one only one space
             String words[] = allPhrases.split(" ");
             int wordsNumber = words.length;
@@ -1204,7 +1208,7 @@ public class Twitter extends org.semanticwb.social.base.TwitterBase {
         }
         if(stream.getStream_notPhrase() != null && !stream.getStream_notPhrase().trim().isEmpty()){//Not phrases
             notPhrases = stream.getStream_notPhrase();
-            notPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(notPhrases);
+            //notPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(notPhrases);
             notPhrases = notPhrases.trim().replaceAll("\\s+", " "); //replace multiple spaces beetwen words for one only one space
             String words[] = notPhrases.split(" ");
             int wordsNumber = words.length;
@@ -1218,14 +1222,14 @@ public class Twitter extends org.semanticwb.social.base.TwitterBase {
         }
         if(stream.getStream_exactPhrase() != null && !stream.getStream_exactPhrase().trim().isEmpty()){//Exact phrase
             exactPhrases = stream.getStream_exactPhrase();
-            exactPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(exactPhrases);
+            //exactPhrases = SWBSocialUtil.Strings.replaceSpecialCharacters(exactPhrases);
             exactPhrases = exactPhrases.trim().replaceAll("\\s+", " "); //replace multiple spaces beetwen words for one only one space
             exactPhrases = "\"" + exactPhrases + "\"";
         }
         
         if(stream.getStream_fromAccount() != null && !stream.getStream_fromAccount().trim().isEmpty()){//Find in certains accounts
             fromAccounts = stream.getStream_fromAccount();
-            fromAccounts = SWBSocialUtil.Strings.replaceSpecialCharacters(fromAccounts);
+            //fromAccounts = SWBSocialUtil.Strings.replaceSpecialCharacters(fromAccounts);
             fromAccounts = fromAccounts.trim().replaceAll("\\s+", " "); //replace multiple spaces beetwen words for one only one space
             String words[] = fromAccounts.split(" ");
             int wordsNumber = words.length;
@@ -1270,7 +1274,7 @@ public class Twitter extends org.semanticwb.social.base.TwitterBase {
             }
         }
         
-        //System.out.println("Final String-->" + parsedPhrases + "<-");        
+        System.out.println("Final String-->" + parsedPhrases + "<-");        
         return parsedPhrases;
     }
     private DevicePlatform getDevicePlatform(ArrayList<DevicePlatform> dp, String source){
