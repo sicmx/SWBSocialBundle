@@ -53,7 +53,7 @@ public class SocialObjRelations extends GenericResource
     {
         try
         {
-            final String path = SWBPlatform.getContextPath() + "/work/models/" + paramRequest.getWebPage().getWebSiteId() + "/jsp/review/socialObjReletions.jsp";
+            final String path = /* SWBPlatform.getContextPath() + */"/work/models/" + paramRequest.getWebPage().getWebSiteId() + "/jsp/review/socialObjReletions.jsp";
             RequestDispatcher dis = request.getRequestDispatcher(path);
             if (dis != null) {
                 try {

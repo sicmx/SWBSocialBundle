@@ -53,7 +53,7 @@ public class EngagementRate extends GenericResource {
             SWBParamRequest paramRequest) throws SWBResourceException, IOException {
         
         if (request.getParameter("suri") != null) {
-            String jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+            String jspResponse = /* SWBPlatform.getContextPath() + */"/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/engagementRate.jsp";
             if (request.getParameter("jspResponse") != null) {
                 jspResponse = request.getParameter("jspResponse");

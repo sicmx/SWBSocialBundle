@@ -78,7 +78,7 @@ public class ImportFanPages extends GenericResource {
     public void doView(HttpServletRequest request, HttpServletResponse response,
             SWBParamRequest paramRequest) throws SWBResourceException, IOException {
         
-        final String path = SWBPlatform.getContextPath() + "/work/models/" +
+        final String path = /* SWBPlatform.getContextPath() + */"/work/models/" +
                 paramRequest.getWebPage().getWebSiteId() + "/jsp/fanPages/importFPFacebook.jsp";
         request.setAttribute("paramRequest", paramRequest);
         

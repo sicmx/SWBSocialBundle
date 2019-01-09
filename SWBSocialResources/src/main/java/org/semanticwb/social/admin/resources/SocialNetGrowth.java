@@ -93,7 +93,7 @@ public class SocialNetGrowth extends GenericResource{
             out.println("</script>");
             
         }*/
-        final String myPath = SWBPlatform.getContextPath() + "/work/models/" +
+        final String myPath = /* SWBPlatform.getContextPath() + */"/work/models/" +
                 paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/growthCharts.jsp";
         
         RequestDispatcher dis = request.getRequestDispatcher(myPath);

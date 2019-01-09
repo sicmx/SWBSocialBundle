@@ -204,11 +204,11 @@ public class SocialWebResource extends GenericAdmResource
                 if (isFacebookNet) {
                     String checkPubPerm = null;
                     if (!((Facebook) socialNetwork).isIsFanPage()) {
-                        permission2Add = "publish_actions";
+                        permission2Add = "manage_pages,publish_pages";
                         checkPubPerm = ((Facebook) socialNetwork).hasPermissions(permission2Add);
                     } else {
                         permission2Add = "manage_pages,publish_pages";
-                        checkPubPerm = "true"; //((Facebook) socialNetwork).hasPermissions(permission2Add);
+                        checkPubPerm = ((Facebook) socialNetwork).hasPermissions(permission2Add);
                     }
                     if (!checkPubPerm.equalsIgnoreCase("true")) {
                         requestPublishPerm = true;

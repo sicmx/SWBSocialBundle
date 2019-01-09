@@ -141,7 +141,7 @@ public class FacebookWall extends GenericResource {
             return;
         }
         if (contentTabId == null) {
-            String jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+            String jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/facebookTabs.jsp";
             RequestDispatcher dis = request.getRequestDispatcher(jspResponse);
             try {
@@ -155,22 +155,22 @@ public class FacebookWall extends GenericResource {
 
         String jspResponse = "";
         if (contentTabId.equals(NEWS_FEED_TAB)) {
-            jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+            jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/facebookNewsFeed.jsp";
         } else if (contentTabId.equals(WALL_TAB)) {
-            jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+            jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/facebookWall.jsp";
         } else if (contentTabId.equals(PICTURES_TAB)) {
-            jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+            jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/facebookPictures.jsp";
         } else if (contentTabId.equals(VIDEOS_TAB)) {
-            jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+            jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/facebookVideos.jsp";
         } else if (contentTabId.equals(FRIENDS_TAB)) {
-            jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+            jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/facebookFriends.jsp";
         } else if (contentTabId.equals(FOLLOWERS_TAB)) {
-            jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+            jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/facebookFollowers.jsp";
         }
 
@@ -1161,7 +1161,7 @@ public class FacebookWall extends GenericResource {
             response.setContentType("text/html; charset=ISO-8859-1");
             response.setHeader("Cache-Control", "no-cache");
             response.setHeader("Pragma", "no-cache");
-            final String path = SWBPlatform.getContextPath() + "/work/models/" +
+            final String path = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialTopic/postInResponse.jsp";
             RequestDispatcher dis = request.getRequestDispatcher(path);
             if (dis != null) {
@@ -1189,7 +1189,7 @@ public class FacebookWall extends GenericResource {
                     "\"style=\"position: absolute;\" onload=\"showFullImage(this);\"/>");
             out.println("</div>");
         } else if (mode != null && mode.equals("displayVideo")) {
-            String jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+            String jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/playVideo.jsp";
             RequestDispatcher dis = request.getRequestDispatcher(jspResponse);
             try {
@@ -1218,11 +1218,11 @@ public class FacebookWall extends GenericResource {
                 }
             }
             if (profileType.equals("user")) {
-                jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+                jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                         paramRequest.getWebPage().getWebSiteId() +
                         "/jsp/socialNetworks/facebookUserProfile.jsp";
             } else if (profileType.equals("page")) {
-                jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+                jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                         paramRequest.getWebPage().getWebSiteId() +
                         "/jsp/socialNetworks/facebookPageProfile.jsp";
             } else {
@@ -1237,7 +1237,7 @@ public class FacebookWall extends GenericResource {
                 //System.out.println("Error displaying user profile");
             }
         } else if (mode.equals("doShowTopic")) {//**ini
-            final String path = SWBPlatform.getContextPath() + "/work/models/" +
+            final String path = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialTopic/assignTopic.jsp";
             response.setContentType("text/html; charset=ISO-8859-1");
             response.setHeader("Cache-Control", "no-cache");
@@ -1254,7 +1254,7 @@ public class FacebookWall extends GenericResource {
                 }
             }
         } else if (mode.equals("doReclassifyTopic")) {
-            final String path = SWBPlatform.getContextPath() + "/work/models/" +
+            final String path = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/socialTopic/classifybyTopic.jsp";
             response.setContentType("text/html; charset=ISO-8859-1");
             response.setHeader("Cache-Control", "no-cache");
@@ -1316,7 +1316,7 @@ public class FacebookWall extends GenericResource {
             response.setContentType("text/html; charset=ISO-8859-1");
             response.setHeader("Cache-Control", "no-cache");
             response.setHeader("Pragma", "no-cache");
-            String jspResponse = SWBPlatform.getContextPath() + "/work/models/" +
+            String jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" +
                     paramRequest.getWebPage().getWebSiteId() + "/jsp/post/createNewPostToUser.jsp";
             RequestDispatcher dis = request.getRequestDispatcher(jspResponse);
             try {
@@ -1359,7 +1359,7 @@ public class FacebookWall extends GenericResource {
             out.println("      <a title=\"" + "Eliminar mensaje" +
                     "\" href=\"#\" class=\"eliminarYoutube\" onclick=\"if(confirm('" +
                     "¿Deseas eliminar el mensaje?" + "')){try{dojo.byId(this.parentNode).innerHTML = '<img src=" +
-                    SWBPlatform.getContextPath() + "/swbadmin/icons/loading.gif>';}catch(noe){} postSocialHtml('" +
+                    /* SWBPlatform.getContextPath() + */ "/swbadmin/icons/loading.gif>';}catch(noe){} postSocialHtml('" +
                     paramRequest.getActionUrl().setAction("deleteMessage").
                             setParameter("id", id).
                             setParameter("currentTab", tabSuffix).
@@ -1378,7 +1378,7 @@ public class FacebookWall extends GenericResource {
             out.write("      <a title=\"" + "Eliminar Mensaje" +
                     "\" href=\"#\" class=\"eliminarYoutube\" onclick=\"if(confirm('" +
                     "¿Deseas eliminar el mensaje?" + "')){try{dojo.byId(this.parentNode).innerHTML = '<img src=" +
-                    SWBPlatform.getContextPath() + "/swbadmin/icons/loading.gif>';}catch(noe){} postSocialHtml('" +
+                    /* SWBPlatform.getContextPath() + */ "/swbadmin/icons/loading.gif>';}catch(noe){} postSocialHtml('" +
                     paramRequest.getActionUrl().setAction("deleteMessage").
                             setParameter("id", id).
                             setParameter("currentTab", tabSuffix).
@@ -3069,7 +3069,7 @@ public class FacebookWall extends GenericResource {
                         "REMOVE" + tabSuffix + "\" dojoType=\"dojox.layout.ContentPane\">");
                 writer.write("      <a title=\"" + "Eliminar Mensaje" +"\" href=\"#\" class=\"eliminarYoutube\" onclick=\"if(confirm('" +
                         "¿Deseas eliminar la foto?" + "')){try{dojo.byId(this.parentNode).innerHTML = '<img src=" +
-                        SWBPlatform.getContextPath() + "/swbadmin/icons/loading.gif>';}catch(noe){} postSocialHtml('" +
+                        /* SWBPlatform.getContextPath() + */ "/swbadmin/icons/loading.gif>';}catch(noe){} postSocialHtml('" +
                         paramRequest.getActionUrl().setAction("deleteMessage").
                                 setParameter("id", postId).
                                 setParameter("currentTab", tabSuffix).
@@ -3392,7 +3392,7 @@ public class FacebookWall extends GenericResource {
                         "REMOVE" + tabSuffix + "\" dojoType=\"dojox.layout.ContentPane\">");
                 writer.write("      <a title=\"" + "Eliminar Mensaje" +"\" href=\"#\" class=\"eliminarYoutube\" onclick=\"if(confirm('" +
                         "¿Deseas eliminar el video?" + "')){try{dojo.byId(this.parentNode).innerHTML = '<img src=" +
-                        SWBPlatform.getContextPath() + "/swbadmin/icons/loading.gif>';}catch(noe){} postSocialHtml('" +
+                        /* SWBPlatform.getContextPath() + */ "/swbadmin/icons/loading.gif>';}catch(noe){} postSocialHtml('" +
                         paramRequest.getActionUrl().setAction("deleteMessage").
                                 setParameter("id", postId).
                                 setParameter("currentTab", tabSuffix).
@@ -3873,7 +3873,7 @@ public class FacebookWall extends GenericResource {
         response.setContentType("text/html; charset=ISO-8859-1");
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Pragma", "no-cache");
-        RequestDispatcher rd = request.getRequestDispatcher(SWBPlatform.getContextPath() +
+        RequestDispatcher rd = request.getRequestDispatcher(/* SWBPlatform.getContextPath() + */ 
                 "/work/models/" + paramRequest.getWebPage().getWebSiteId() + "/jsp/post/typeOfContent.jsp");
         request.setAttribute("contentType", request.getParameter("valor"));
         request.setAttribute("wsite", request.getParameter("wsite"));

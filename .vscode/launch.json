@@ -1,0 +1,84 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ListenerMgr<SWBSocialModel>",
+            "request": "launch",
+            "mainClass": "org.semanticwb.social.listener.ListenerMgr",
+            "projectName": "SWBSocialModel"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SentimentalDataClassifier<SWBSocialModel>",
+            "request": "launch",
+            "mainClass": "org.semanticwb.social.listener.SentimentalDataClassifier",
+            "projectName": "SWBSocialModel"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Test<SWBSocialModel>",
+            "request": "launch",
+            "mainClass": "org.semanticwb.social.listener.twitter.Test",
+            "projectName": "SWBSocialModel"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ReadImage<SWBSocialModel>",
+            "request": "launch",
+            "mainClass": "org.semanticwb.social.test.ReadImage",
+            "projectName": "SWBSocialModel"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SWN3<SWBSocialModel>",
+            "request": "launch",
+            "mainClass": "org.semanticwb.social.test.SWN3",
+            "projectName": "SWBSocialModel"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SentiWordNetDemoCode<SWBSocialModel>",
+            "request": "launch",
+            "mainClass": "org.semanticwb.social.test.SentiWordNetDemoCode",
+            "projectName": "SWBSocialModel"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TestDelectLang<SWBSocialModel>",
+            "request": "launch",
+            "mainClass": "org.semanticwb.social.test.TestDelectLang",
+            "projectName": "SWBSocialModel"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TwitterStreamingApiTest<SWBSocialModel>",
+            "request": "launch",
+            "mainClass": "org.semanticwb.social.test.TwitterStreamingApiTest",
+            "projectName": "SWBSocialModel"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Phonematizer<SWBSocialModel>",
+            "request": "launch",
+            "mainClass": "org.semanticwb.social.util.phonematizer.Phonematizer",
+            "projectName": "SWBSocialModel"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TestKlout<SWBSocialResources>",
+            "request": "launch",
+            "mainClass": "org.semanticwb.social.test.TestKlout",
+            "projectName": "SWBSocialResources"
+        }
+    ]
+}

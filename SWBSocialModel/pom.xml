@@ -135,10 +135,10 @@
             <artifactId>commons-validator</artifactId>
             <version>1.4.0</version>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>javaQuery</groupId>
             <artifactId>javaQuery</artifactId>
             <version>5.0</version>
-        </dependency>
+        </dependency-->
     </dependencies>
 </project>

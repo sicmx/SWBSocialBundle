@@ -71,7 +71,7 @@ public class FacebookInteraction extends GenericResource {
             return;
         }
         
-        final String myPath = SWBPlatform.getContextPath() + "/work/models/" +
+        final String myPath = /* SWBPlatform.getContextPath() + */"/work/models/" +
                 paramRequest.getWebPage().getWebSiteId() + "/jsp/socialNetworks/facebookInteraction.jsp";
         RequestDispatcher dis = request.getRequestDispatcher(myPath);
         if (dis != null) {

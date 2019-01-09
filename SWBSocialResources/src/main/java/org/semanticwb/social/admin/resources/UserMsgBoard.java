@@ -66,7 +66,7 @@ public class UserMsgBoard extends GenericResource{
         }
         
         
-        String jspResponse = SWBPlatform.getContextPath() +"/work/models/" + paramRequest.getWebPage().getWebSiteId() +"/jsp/homePreview/userMsgBoard.jsp";
+        String jspResponse = /* SWBPlatform.getContextPath() + */ "/work/models/" + paramRequest.getWebPage().getWebSiteId() +"/jsp/homePreview/userMsgBoard.jsp";
         RequestDispatcher dis = request.getRequestDispatcher(jspResponse);
         try {
             request.setAttribute("paramRequest", paramRequest);
